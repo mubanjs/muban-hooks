@@ -1,5 +1,5 @@
 {
-  "name": "@muban/muban",
+  "name": "@muban/hooks",
   "version": "1.0.0-alpha.0",
   "description": "Reusable hooks for Muban components",
   "keywords": [
