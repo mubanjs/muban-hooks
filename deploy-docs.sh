@@ -13,6 +13,8 @@ cd .docs/dist
 # echo 'www.example.com' > CNAME
 
 git init -b main
+git config user.name github-actions
+git config user.email github-actions@github.com
 git add -A
 git commit -m 'deploy'
 
