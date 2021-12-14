@@ -1,0 +1,63 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta
+  title="useToggle/docs"
+/>
+
+# useToggle
+
+The `useToggle` hook provides you with a `boolean` `ref` and a `toggle` function that can be used
+to toggle or set the value of the `ref`.
+
+It saves you from using `state.value = !state.value`.
+
+## Reference
+
+```ts
+function useToggle(
+  initialValue: Ref<boolean> | boolean,
+): readonly [Ref<boolean>, (force?: boolean) => void]
+```
+
+### Parameters
+* `initialValue` – The initial value of the state.
+
+### Returns
+* `[state, toggle]`
+  * `state` – A ref to the toggled state.
+  * `toggle` – A toggle function. When called without any parameters, it will negate the state.
+  Otherwise, it will set the state to the passed value.
+
+## Usage
+
+```ts
+const [state, toggle] = useToggle(false);
+````
+
+```ts
+const Demo = defineComponent({
+  name: 'demo',
+  setup({ refs }) {
+    // receive a reactive value, and a toggle function to update it
+    const [isActive, toggle] = useToggle(false);
+
+    onMounted(() => {
+      // call with a specific value
+      toggle(true);
+    });
+
+    watchEffect(() => {
+      // react to changes
+      console.log('active', isActive);
+    })
+
+    return [
+      // use in bindings
+      bind(refs.self, {
+        text: isActive,
+        click: () => toggle()
+      })
+    ]
+  }
+})
+```

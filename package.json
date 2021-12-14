@@ -1,0 +1,81 @@
+{
+  "name": "@muban/muban",
+  "version": "1.0.0-alpha.0",
+  "description": "Reusable hooks for Muban components",
+  "keywords": [
+    "muban",
+    "hooks"
+  ],
+  "repository": "git@github.com:mubanjs/muban.git",
+  "author": "Arjan van Wijk <thanarie@gmail.com>",
+  "license": "MIT",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "exports": {
+    "require": "./dist/cjs/index.js",
+    "import": "./dist/esm/index.js"
+  },
+  "types": "./dist/esm/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "npm-run-all -s clean build:*",
+    "build:ts": "tsc -p tsconfig.build.cjs.json",
+    "build:ts-esm": "tsc -p ./tsconfig.build.esm.json",
+    "clean": "npm-run-all clean:*",
+    "clean:test": "shx rm -rf coverage .nyc_output",
+    "clean:npm": "shx rm -rf lib dist",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
+    "lint:single": "eslint /Volumes/Projects/mm/muban/muban-component/examples/src/components/toggle-expand/ToggleExpand.ts",
+    "lint:language": "alex",
+    "test": "jest ./src/",
+    "cypress": "cypress open",
+    "check-types": "tsc --project tsconfig.json --noEmit --noUnusedLocals",
+    "storybook": "start-storybook -p 6006",
+    "storybook:build": "build-storybook -o ./.docs/dist",
+    "storybook:deploy": "./deploy-docs.sh",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
+    "@babel/plugin-proposal-optional-chaining": "^7.12.7",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/plugin-transform-modules-commonjs": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-typescript": "^7.10.4",
+    "@babel/runtime-corejs3": "^7.12.5",
+    "@muban/muban": "^1.0.0-alpha.28",
+    "@muban/eslint-config": "^1.0.0-alpha.4",
+    "@muban/storybook": "^7.0.0-alpha.15",
+    "@muban/template": "^1.0.0-alpha.1",
+    "@storybook/addon-actions": "^6.4.9",
+    "@storybook/addon-essentials": "^6.4.9",
+    "@storybook/addon-links": "^6.4.9",
+    "@storybook/addon-postcss": "^2.0.0",
+    "@storybook/builder-webpack5": "^6.4.9",
+    "@storybook/manager-webpack5": "^6.4.9",
+    "@storybook/theming": "^6.4.9",
+    "@types/jest": "^26.0.15",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.3.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.5",
+    "shx": "^0.3.3",
+    "ts-jest": "^26.2.0",
+    "ts-key-enum": "2.0.4",
+    "typescript": "^4.5.4"
+  },
+  "engines": {
+    "npm": ">= 7.0.0",
+    "yarn": "please use npm"
+  }
+}
