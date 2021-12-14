@@ -1,19 +1,12 @@
-# NOTE: taken from https://github.com/MylesBorins/node-osc/blob/main/.github/workflows/bump-version.yml
-
-name: Bump version, Tag & Publish
+name: Update Docs
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Semver type of new version (major / minor / patch / prerelease)'
-        required: true
-      prereleaseid:
-        description: 'Prerelease id (rc)'
-        default: ''
+  push:
+    branches:
+      - main
 
 jobs:
-  bump-version:
+  update-docs:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,19 +27,6 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
 
-      - name: bump version
+      - name: Build & Deploy Storybook Docs
         run: |
-          npm version ${{ github.event.inputs.version }} --no-git-tag-version --preid ${{ github.event.inputs.prereleaseid }}
-          git add .
-          git commit -m "v$(npm pkg get version | tr -d '"')"
-          git tag $(npm pkg get version | tr -d '"') -m "v$(npm pkg get version | tr -d '"')"
-
-      - name: publish
-        run: |
-          npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
-          npm publish
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Push latest version
-        run: git push origin main --follow-tags
+          npm run storybook:deploy
