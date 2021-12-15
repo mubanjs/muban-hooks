@@ -41,6 +41,10 @@
     "storybook:deploy": "./deploy-docs.sh",
     "prepublishOnly": "npm run build"
   },
+  "peerDependencies": {
+    "@muban/muban": "^1.0.0-alpha.28"
+  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
