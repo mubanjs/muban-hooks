@@ -41,7 +41,6 @@
     "storybook:deploy": "./deploy-docs.sh",
     "prepublishOnly": "npm run build"
   },
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
@@ -52,8 +51,8 @@
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-typescript": "^7.10.4",
     "@babel/runtime-corejs3": "^7.12.5",
-    "@muban/muban": "^1.0.0-alpha.28",
     "@muban/eslint-config": "^1.0.0-alpha.4",
+    "@muban/muban": "^1.0.0-alpha.28",
     "@muban/storybook": "^7.0.0-alpha.15",
     "@muban/template": "^1.0.0-alpha.1",
     "@storybook/addon-actions": "^6.4.9",
