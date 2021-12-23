@@ -1,14 +1,18 @@
 import { useToggle } from './useToggle';
 
 describe('useToggle', () => {
-  test('The initial state', () => {
+  it('should not crash', () => {
+    useToggle(true);
+  });
+
+  it('should have correct initial state', () => {
     const [state1] = useToggle(true);
     const [state2] = useToggle(false);
     expect(state1.value).toEqual(true);
     expect(state2.value).toEqual(false);
   });
 
-  test('The toggle should switch the value', () => {
+  it('should switch the value when calling toggle', () => {
     const [state, toggle] = useToggle(false);
     expect(state.value).toEqual(false);
 
@@ -19,7 +23,7 @@ describe('useToggle', () => {
     expect(state.value).toEqual(false);
   });
 
-  test('The toggle should set the value', () => {
+  it('should set the value explicitly', () => {
     const [state, toggle] = useToggle(false);
     expect(state.value).toEqual(false);
 
