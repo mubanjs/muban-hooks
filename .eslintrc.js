@@ -7,5 +7,6 @@ module.exports = {
     '@muban/eslint-config',
   ],
   rules: {
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.ts", "**/test-utils/**/*.ts"]}]
   },
 };

@@ -54,3 +54,22 @@ Steps for adding a new Hook:
 * Add a story file to test out the hook
   * Add an instructions banner at the top of the story
 * Add unit tests
+
+### Mocking muban lifecycle hooks
+
+In order to test hooks in isolation, we need to mock the `onMounted` and `onUnmounted` hooks.
+This can be done by adding this at the top of your test file:
+
+```ts
+jest.mock('@muban/muban', () => getMubanLifecycleMock());
+```
+
+Because the above line mocks all imports to `@muban/muban`, any other legit import to muban you 
+want to do will also be mocked.
+
+- If you want to do other imports to muban in your hooks, they should be added to the 
+  `getMubanLifecycleMock` implementation to make your tests run.
+- If you want to do other imports to muban in your test code, you should import from 
+  `@muban/test-mock` instead. This is an alias to the same muban library, but unaffected by the 
+  mocks.
+- Any nested import (e.g. '@muban/muban/lib/Component') is unaffected
