@@ -1,8 +1,8 @@
 /* eslint-disable unicorn/prevent-abbreviations,import/no-extraneous-dependencies */
 // import UseToggleDocs from './useEventListener.docs.mdx';
 
-import { bind, computed, defineComponent, reactive, refComponent, watch } from '@muban/muban';
-import type { Story } from '@muban/storybook/dist/client/preview/types-6-0';
+import { bind, computed, defineComponent, reactive, refComponent } from '@muban/muban';
+import type { Story } from '@muban/storybook/types-6-0';
 import { html } from '@muban/template';
 import { useEventListener } from './useEventListener';
 

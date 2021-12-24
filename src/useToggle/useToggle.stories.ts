@@ -2,7 +2,7 @@
 // import UseToggleDocs from './useToggle.docs.mdx';
 
 import { bind, defineComponent, propType } from '@muban/muban';
-import type { Story } from '@muban/storybook/dist/client/preview/types-6-0';
+import type { Story } from '@muban/storybook/types-6-0';
 import { html } from '@muban/template';
 import { useToggle } from './useToggle';
 
@@ -10,7 +10,9 @@ export default {
   title: 'useToggle',
 };
 
-export const Demo: Story = () => ({
+type DemoStoryProps = { initialValue?: boolean };
+
+export const Demo: Story<DemoStoryProps> = () => ({
   component: defineComponent({
     name: 'story',
     props: {
@@ -44,7 +46,10 @@ export const Demo: Story = () => ({
       ];
     },
   }),
-  template: () => html`<div data-component="story" data-initial-value="true">
+  template: ({ initialValue = false }: DemoStoryProps = {}) => html`<div
+    data-component="story"
+    data-initial-value=${String(initialValue)}
+  >
     <div class="alert alert-primary">
       <h4 class="alert-heading">Instructions!</h4>
       <p class="mb-0">When clicking the buttons, the value should update accordingly.</p>
