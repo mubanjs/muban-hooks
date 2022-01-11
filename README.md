@@ -54,7 +54,7 @@ Run `npm run storybook` to preview your stories and documentation.
 * `useHookName.stories.ts` – To showcase the hook with a working UI, also used for dom testing
 * `useHookName.stories.mdx` – Documentation about the hook
 * `useHookName.test.ts` – Unit tests for the hook
-* `useHookNameStories.test.ts` – Unit tests for the stories using `testing-library`
+* `useHookNameStories.test.ts` – Unit tests for the stories using `@muban/testing-library`
 
 ### Steps for adding a new Hook:
 
@@ -141,8 +141,8 @@ if intermediate state requires testing.
 
 ## Writing Story tests
 
-Use the `render` function to render a Story component in the DOM, and use the "testing-library"
-query, event and assert functions to test if your Story works as intended.
+Use the `render` function to render a Story component in the DOM, and use the 
+"@muban/testing-library" query, event and assert functions to test if your Story works as intended.
 
 Add `import '@testing-library/jest-dom';` to the top of your file to augment Jest with
 additional matchers for DOM elements.

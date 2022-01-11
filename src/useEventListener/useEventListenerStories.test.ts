@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
-import { waitFor } from '@testing-library/dom';
-import { render } from '../testing-library/render';
+import { waitFor, render } from '@muban/testing-library';
 import { Demo } from './useEventListener.stories';
 
 describe('useEventListener stories', () => {
