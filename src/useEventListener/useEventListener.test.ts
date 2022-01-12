@@ -1,9 +1,7 @@
-import { getMubanLifecycleMock, runComponentSetup } from '../test-utils/componentLifecycleMock';
-import { createMockComponentRef } from '../test-utils/createMockComponentRef';
-import { createMockElementRef } from '../test-utils/createMockElementRef';
+import { createMockComponentRef, createMockElementRef, runComponentSetup } from '@muban/test-utils';
 import { useEventListener } from './useEventListener';
 
-jest.mock('@muban/muban', () => getMubanLifecycleMock());
+jest.mock('@muban/muban', () => jest.requireActual('@muban/test-utils').getMubanLifecycleMock());
 
 describe('useEventListener', () => {
   it('should not crash', async () => {
