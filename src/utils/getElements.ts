@@ -6,7 +6,7 @@ import { getElement } from './getElement';
  * This helper method can be used to standardize the converting of Muban refs to HTMLElements,
  * this can be very useful when creating utils that support Refs and HTMLElements as the source.
  *
- * Similar to the `getElement` but it also supports collections and will always return an ArrayP.
+ * Similar to the `getElement` but it also supports collections and will always return an Array.
  */
 export function getElements<T extends RefElementType = HTMLElement>(
   source: DomElementsOrRefCollection<T> | DomElementOrRef<T>,
