@@ -1,0 +1,52 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta
+  title="useEscapeKeyEvent/docs"
+/>
+
+# useEscapeKeyEvent
+
+The `useEscapeKeyEvent` hook is is a preset for the [useKeyboardEvent](?path=/story/usekeyboardevent-docs--page) hook, it is probably one of
+the most common use cases for adding keyboard events to your application.
+
+When building applications that use some sort of overlay or dropdown it's common courtesy to implement
+some sort of functionality that allows you to close it through pressing the `Escape` key on your keyboard.
+
+This helps in making your site feel more intuitive and accessibility friendly, see a more detailed
+description about this on the [W3.org page](https://www.w3.org/TR/wai-aria-practices-1.1/#keyboard-interaction-7).
+
+## Reference
+
+```ts
+function useEscapeKeyEvent(
+  callback: KeyDownCallback,
+): void
+```
+
+### Parameters
+
+* `callback` – The function to invoke when the `Escape` key is pressed.
+
+### Returns
+
+* `void`
+
+## Usage
+
+```ts
+useEscapeKeyEvent((event: KeyboardEvent) => {
+  console.log('The Escape key is pressed', event.currentTarget);
+});
+````
+
+```ts
+const Demo = defineComponent({
+  name: 'demo',
+  setup({ refs }) {
+    // The default event is bound to the document
+    useEscapeKeyEvent(() => console.log('The `Escape` key is pressed.'));
+
+    return [];
+  }
+})
+```

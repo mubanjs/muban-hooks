@@ -1,0 +1,72 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta
+  title="useKeyboardEvent/docs"
+/>
+
+# useKeyboardEvent
+
+The `useKeyboardEvent` hook uses the [useEventListener](?path=/story/useeventlistener-docs--page) to attach a keyboard event (`keydown`) to a specific
+target and triggers a callback when the provided key is pressed.
+
+The default target is the `document`, because local bindings are usually done through the `event`
+binding.
+
+But if you ever need to you could still overwrite the event target to something else, it
+has support for the following targets:
+* `Window`
+* `Document`
+* `DomElementOrRef` - Meaning all types of Dom elements or Muban Refs
+
+> **Note:** You can use the [useEscapeKeyEvent](?path=/story/useescapekeyevent-docs--page) hook if you want to attach a listener for the `Escape` key
+
+## Reference
+
+```ts
+function useKeyboardEvent(
+  keys: KeyboardEventKey | Array<KeyboardEventKey>,
+  callback: KeyDownCallback,
+  target: EventTarget = document,
+): void
+```
+
+### Parameters
+
+* `keys` – The key(s) that you want to listen for.
+* `callback` – The function to invoke when the one of the keys is pressed.
+* `target` – The target on which the listener is bound, by default the document.
+
+### Returns
+
+* `void`
+
+## Usage
+
+```ts
+useKeyboardEvent(Key.ArrowRight, (event: KeyboardEvent) => {
+  console.log('The arrow right is pressed', event.currentTarget);
+});
+````
+
+
+```ts
+const Demo = defineComponent({
+  name: 'demo',
+  refs: {
+    someRef: 'some-ref'
+  },
+  setup({ refs }) {
+
+    // The default event is bound to the document
+    useKeyboardEvent(Key.ArrowRight, () => console.log('The `ArrowRight` key is pressed.'));
+
+    // You can add multiple keys to your listener, either through the `ts-key-enum` or a `string`
+    useKeyboardEvent([Key.ArrowLeft, 'a'], () => console.log('The `ArrowLeft` or `a` key was pressed.'));
+
+    // You can even overwrite the default target to something else if you don't want the document.
+    useEventListener(Key.ArrowUp, () => console.log('The `ArrowUp` is pressed.'), refs.someRef);
+
+    return [];
+  }
+})
+```
