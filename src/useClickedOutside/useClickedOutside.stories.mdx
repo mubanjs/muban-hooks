@@ -33,7 +33,7 @@ function useClickedOutside<T extends RefElementType>(
 ## Usage
 
 ```ts
-useClickedOutside(refs.someContainer, 'click', (event: MouseEvent) => {
+useClickedOutside(refs.someContainer, (event) => {
   console.log('clicked outside of the container', event.currentTarget);
 });
 ````
