@@ -22,6 +22,8 @@ describe('useEventListener', () => {
     });
 
     expect(listenerSpy).toBeCalledTimes(1);
+
+    listenerSpy.mockRestore();
   });
 
   it('should call removeEventListener on the target when unmounted', async () => {
@@ -33,6 +35,8 @@ describe('useEventListener', () => {
     });
 
     expect(listenerSpy).toBeCalledTimes(1);
+
+    listenerSpy.mockRestore();
   });
 
   it('should not the listener when clicked on the target', async () => {
@@ -60,7 +64,7 @@ describe('useEventListener', () => {
         useClickedOutside(target, mockHandler);
       },
       () => {
-        document.body.dispatchEvent(new MouseEvent('click'));
+        document.dispatchEvent(new MouseEvent('click'));
       },
     );
 
@@ -82,6 +86,8 @@ describe('useEventListener', () => {
     );
 
     expect(listenerSpy.mock.calls[0][2]).toEqual({ capture: false, passive: false });
+
+    listenerSpy.mockRestore();
   });
 
   it('should work with an element Ref', async () => {
@@ -94,7 +100,7 @@ describe('useEventListener', () => {
         useClickedOutside(ref, mockHandler);
       },
       () => {
-        document.body.dispatchEvent(new MouseEvent('click'));
+        document.dispatchEvent(new MouseEvent('click'));
       },
     );
 
@@ -111,7 +117,7 @@ describe('useEventListener', () => {
         useClickedOutside(ref, mockHandler);
       },
       () => {
-        document.body.dispatchEvent(new MouseEvent('click'));
+        document.dispatchEvent(new MouseEvent('click'));
       },
     );
 
