@@ -24,7 +24,7 @@ has support for the following targets:
 
 ```ts
 function useKeyboardEvent(
-  keys: KeyboardEventKey | Array<KeyboardEventKey>,
+  keys: string | Array<string>,
   callback: KeyDownCallback,
   target: EventTarget = document,
 ): void
@@ -35,6 +35,9 @@ function useKeyboardEvent(
 * `keys` – The key(s) that you want to listen for.
 * `callback` – The function to invoke when the one of the keys is pressed.
 * `target` – The target on which the listener is bound, by default the document.
+
+> **Note:** We encourage using something like [ts-key-enum](https://www.npmjs.com/package/ts-key-enum)
+> for the `keys` as much as possible, this way there is less room for typo's.
 
 ### Returns
 
@@ -47,7 +50,6 @@ useKeyboardEvent(Key.ArrowRight, (event: KeyboardEvent) => {
   console.log('The arrow right is pressed', event.currentTarget);
 });
 ````
-
 
 ```ts
 const Demo = defineComponent({

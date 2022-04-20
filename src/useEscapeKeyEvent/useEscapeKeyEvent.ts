@@ -1,4 +1,3 @@
-import { Key } from 'ts-key-enum';
 import type { KeyDownCallback } from '../useKeyboardEvent/useKeyboardEvent';
 import { useKeyboardEvent } from '../useKeyboardEvent/useKeyboardEvent';
 
@@ -9,5 +8,5 @@ import { useKeyboardEvent } from '../useKeyboardEvent/useKeyboardEvent';
  * @param callback The function to invoke when the `Escape` key is pressed.
  */
 export function useEscapeKeyEvent(callback: KeyDownCallback): void {
-  useKeyboardEvent(Key.Escape, callback);
+  useKeyboardEvent('Escape', callback);
 }
