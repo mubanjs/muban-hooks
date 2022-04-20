@@ -7,7 +7,7 @@ import { getElements } from '../utils/getElements';
  * A small wrapper method to easily check if a user clicked inside an Element.
  *
  * @param target - The target that the user has clicked on.
- * @param container - The container where to check against.
+ * @param container - The container element that we expect to contain the `target` element.
  */
 export function isClickedInside(target: Element, container: Element): boolean {
   return container ? container.contains(target) : false;
