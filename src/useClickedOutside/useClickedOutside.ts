@@ -29,7 +29,7 @@ export function useClickedOutside<T extends RefElementType = HTMLElement>(
   function onDocumentClick(event: MouseEvent) {
     const { target } = event;
     const elements = getElements<T>(container);
-    const match = target && elements.find((element) => isClickedInside(target, element));
+    const match = target && elements.some((element) => isClickedInside(target, element));
 
     if (!match) {
       callback(event);
