@@ -14,7 +14,7 @@ export function isClickedInside(target: Element, container: Element): boolean {
 }
 
 /**
- * Will add an event listener to the body and will fire a callback if the user clicks
+ * Will add an event listener to the document and will fire a callback if the user clicks
  * outside the provided container.
  *
  * @param container - The element or elements used to check if the user clicked outside.
