@@ -4,13 +4,13 @@ import type { DomElementOrRef, DomElementsOrRefCollection } from '../utils/util.
 import { getElements } from '../utils/getElements';
 
 /**
- * A small wrapper method to easily check if a user clicked inside a HTMLElement.
+ * A small wrapper method to easily check if a user clicked inside an Element.
  *
- * @param target - The target there the user clicked.
+ * @param target - The target that the user has clicked on.
  * @param container - The container where to check against.
  */
-export function isClickedInside(target: EventTarget, container: RefElementType): boolean {
-  return container ? container.contains(target as HTMLElement) : false;
+export function isClickedInside(target: Element, container: Element): boolean {
+  return container ? container.contains(target) : false;
 }
 
 /**
@@ -29,7 +29,7 @@ export function useClickedOutside<T extends RefElementType = HTMLElement>(
   function onDocumentClick(event: MouseEvent) {
     const { target } = event;
     const elements = getElements<T>(container);
-    const match = target && elements.some((element) => isClickedInside(target, element));
+    const match = target && elements.some((element) => isClickedInside(target as Element, element));
 
     if (!match) {
       callback(event);
