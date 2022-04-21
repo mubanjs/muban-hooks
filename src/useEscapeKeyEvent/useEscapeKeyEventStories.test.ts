@@ -1,9 +1,11 @@
 import '@testing-library/jest-dom';
 import { waitFor, render } from '@muban/testing-library';
-import { Key } from 'ts-key-enum';
+import userEvent from '@testing-library/user-event';
 import { Demo } from './useEscapeKeyEvent.stories';
 
 describe('useEscapeKeyEvent stories', () => {
+  const { keyboard } = userEvent.setup();
+
   it('should render', () => {
     const { getByText } = render(Demo);
 
