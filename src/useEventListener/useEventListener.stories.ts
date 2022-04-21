@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { bind, computed, defineComponent, refComponent } from '@muban/muban';
+import { defineComponent, refComponent } from '@muban/muban';
 import type { Story } from '@muban/storybook/types-6-0';
 import { html } from '@muban/template';
 import { useEventListener } from './useEventListener';
@@ -25,7 +25,7 @@ export const Demo: Story = () => ({
       component: refComponent(Test),
     },
     setup({ refs }) {
-      const { state, log } = useStorybookLog();
+      const { log, binding } = useStorybookLog(refs.label);
 
       useEventListener(window, 'click', () => {
         log('clicked the window');
@@ -40,15 +40,7 @@ export const Demo: Story = () => ({
         log('clicked the component');
       });
 
-      return [
-        bind(refs.label, {
-          html: computed(() =>
-            state
-              .map((value) => html`<div class="alert alert-dismissible alert-info">${value}</div>`)
-              .join(''),
-          ),
-        }),
-      ];
+      return [binding];
     },
   }),
   template: () => html`<div data-component="story" data-initial-value="true">
