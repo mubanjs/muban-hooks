@@ -13,8 +13,7 @@ describe('useEscapeKeyEvent stories', () => {
   it('should press the `Escape` key', async () => {
     const { getByText } = render(Demo);
 
-    document.dispatchEvent(new KeyboardEvent('keydown', { key: Key.Escape }));
-
+    await keyboard('{Escape}');
     await waitFor(() => expect(getByText('pressed the `Escape` key')).toBeInTheDocument());
   });
 });

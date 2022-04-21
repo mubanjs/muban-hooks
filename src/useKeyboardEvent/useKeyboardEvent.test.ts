@@ -1,5 +1,4 @@
 import { createMockComponentRef, createMockElementRef, runComponentSetup } from '@muban/test-utils';
-import { Key } from 'ts-key-enum';
 import { useKeyboardEvent } from './useKeyboardEvent';
 
 jest.mock('@muban/muban', () => jest.requireActual('@muban/test-utils').getMubanLifecycleMock());
@@ -9,7 +8,7 @@ describe('useKeyboardEvent', () => {
     const mockHandler = jest.fn();
 
     await runComponentSetup(() => {
-      useKeyboardEvent(Key.ArrowRight, mockHandler);
+      useKeyboardEvent('ArrowRight', mockHandler);
     });
   });
 
@@ -17,7 +16,7 @@ describe('useKeyboardEvent', () => {
     const listenerSpy = jest.spyOn(document, 'addEventListener');
 
     await runComponentSetup(() => {
-      useKeyboardEvent(Key.ArrowRight, () => undefined);
+      useKeyboardEvent('ArrowRight', () => undefined);
     });
 
     expect(listenerSpy).toBeCalledTimes(1);
@@ -29,7 +28,7 @@ describe('useKeyboardEvent', () => {
     const listenerSpy = jest.spyOn(document, 'removeEventListener');
 
     await runComponentSetup(() => {
-      useKeyboardEvent(Key.ArrowRight, () => undefined);
+      useKeyboardEvent('ArrowRight', () => undefined);
     });
 
     expect(listenerSpy).toBeCalledTimes(1);
@@ -42,10 +41,10 @@ describe('useKeyboardEvent', () => {
 
     await runComponentSetup(
       () => {
-        useKeyboardEvent(Key.ArrowRight, mockHandler);
+        useKeyboardEvent('ArrowRight', mockHandler);
       },
       () => {
-        document.dispatchEvent(new KeyboardEvent('keydown', { key: Key.ArrowRight }));
+        document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
       },
     );
 
@@ -73,10 +72,10 @@ describe('useKeyboardEvent', () => {
 
     await runComponentSetup(
       () => {
-        useKeyboardEvent(Key.ArrowRight, mockHandler, ref);
+        useKeyboardEvent('ArrowRight', mockHandler, ref);
       },
       () => {
-        target.dispatchEvent(new KeyboardEvent('keydown', { key: Key.ArrowRight }));
+        target.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
       },
     );
 
@@ -90,10 +89,10 @@ describe('useKeyboardEvent', () => {
 
     await runComponentSetup(
       () => {
-        useKeyboardEvent(Key.ArrowRight, mockHandler, ref);
+        useKeyboardEvent('ArrowRight', mockHandler, ref);
       },
       () => {
-        target.dispatchEvent(new KeyboardEvent('keydown', { key: Key.ArrowRight }));
+        target.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
       },
     );
 

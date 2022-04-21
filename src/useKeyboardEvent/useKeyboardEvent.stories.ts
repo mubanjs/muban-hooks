@@ -2,7 +2,6 @@
 import { bind, computed, defineComponent, reactive } from '@muban/muban';
 import type { Story } from '@muban/storybook/types-6-0';
 import { html } from '@muban/template';
-import { Key } from 'ts-key-enum';
 import { useKeyboardEvent } from './useKeyboardEvent';
 
 export default {
@@ -26,10 +25,10 @@ export const Demo: Story = () => ({
         }, 2000);
       };
 
-      useKeyboardEvent(Key.Enter, () => {
+      useKeyboardEvent('Enter', () => {
         log('pressed the `Enter` key');
       });
-      useKeyboardEvent([Key.ArrowLeft, Key.ArrowRight], () => {
+      useKeyboardEvent(['ArrowLeft', 'ArrowRight'], () => {
         log('pressed the `ArrowRight` or `ArrowLeft` key');
       });
       useKeyboardEvent(
@@ -51,7 +50,7 @@ export const Demo: Story = () => ({
       ];
     },
   }),
-  template: () => html` <div data-component="story">
+  template: () => html` <div data-component="story" data-ref="root">
     <div class="alert alert-primary">
       <h4 class="alert-heading">Instructions!</h4>
       <p class="mb-2">Press any of the following keys to see events being triggered</p>
