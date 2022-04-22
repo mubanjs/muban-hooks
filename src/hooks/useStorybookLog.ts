@@ -9,11 +9,9 @@ import type { Binding } from '@muban/muban/types/lib/bindings/bindings.types';
  *
  * @param logRef The Ref that will hold the logs.
  */
-export function useStorybookLog(logRef: ElementRef | ComponentRef<ComponentFactory>): {
-  logs: Array<string>;
-  log: (message: string) => void;
-  logBinding: Binding;
-} {
+export function useStorybookLog(
+  logRef: ElementRef | ComponentRef<ComponentFactory>,
+): readonly [(message: string) => void, Binding, Array<string>] {
   const logs = reactive<Array<string>>([]);
 
   function log(message: string): void {
@@ -23,15 +21,15 @@ export function useStorybookLog(logRef: ElementRef | ComponentRef<ComponentFacto
     }, 2000);
   }
 
-  return {
-    logs,
+  return [
     log,
-    logBinding: bind(logRef, {
+    bind(logRef, {
       html: computed(() =>
         logs
           .map((value) => html`<div class="alert alert-dismissible alert-info">${value}</div>`)
           .join(''),
       ),
     }),
-  };
+    logs,
+  ];
 }

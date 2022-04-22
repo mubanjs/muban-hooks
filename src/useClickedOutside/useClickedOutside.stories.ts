@@ -18,7 +18,7 @@ export const Demo: Story = () => ({
       label: 'label',
     },
     setup({ refs }) {
-      const { log, logBinding } = useStorybookLog(refs.label);
+      const [log, logBinding] = useStorybookLog(refs.label);
 
       useClickedOutside(refs.testArea, () => {
         log('clicked outside the test area');
@@ -27,7 +27,7 @@ export const Demo: Story = () => ({
       return [logBinding];
     },
   }),
-  template: () => html` <div data-component="story" data-initial-value="true">
+  template: () => html`<div data-component="story" data-initial-value="true">
     <div class="alert alert-primary">
       <h4 class="alert-heading">Instructions!</h4>
       <p class="mb-0">Click outside the <code>"Test Area"</code> to see events being triggered</p>
