@@ -25,7 +25,7 @@ export const Demo: Story = () => ({
       component: refComponent(Test),
     },
     setup({ refs }) {
-      const { log, binding } = useStorybookLog(refs.label);
+      const { log, logBinding } = useStorybookLog(refs.label);
 
       useEventListener(window, 'click', () => {
         log('clicked the window');
@@ -40,7 +40,7 @@ export const Demo: Story = () => ({
         log('clicked the component');
       });
 
-      return [binding];
+      return [logBinding];
     },
   }),
   template: () => html`<div data-component="story" data-initial-value="true">

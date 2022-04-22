@@ -7,12 +7,12 @@ import type { Binding } from '@muban/muban/types/lib/bindings/bindings.types';
 /**
  * This hook can be used to keep track of logs within Storybook
  *
- * @param ref The Ref that will hold the logs.
+ * @param logRef The Ref that will hold the logs.
  */
-export function useStorybookLog(ref: ElementRef | ComponentRef<ComponentFactory>): {
+export function useStorybookLog(logRef: ElementRef | ComponentRef<ComponentFactory>): {
   logs: Array<string>;
   log: (message: string) => void;
-  binding: Binding;
+  logBinding: Binding;
 } {
   const logs = reactive<Array<string>>([]);
 
@@ -26,7 +26,7 @@ export function useStorybookLog(ref: ElementRef | ComponentRef<ComponentFactory>
   return {
     logs,
     log,
-    binding: bind(ref, {
+    logBinding: bind(logRef, {
       html: computed(() =>
         logs
           .map((value) => html`<div class="alert alert-dismissible alert-info">${value}</div>`)
