@@ -1,0 +1,72 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta
+  title="useTimeout/docs"
+/>
+
+# useTimeout
+
+The `useTimeout` hook is a wrapper around the native `setTimeout`, it allows you to easily create set
+a timeout within your component that will be auto cancelled when the component unmounts.
+
+## Reference
+
+```ts
+function useTimeout(
+  callback: () => void,
+  duration?: number = 100,
+  startImmediate?: boolean = true,
+): { start: () => void, cancel: () => void }
+```
+
+### Parameters
+* `callback` – The function to invoke when the timeout runs out.
+* `duration` - The duration of the timeout you want to create.
+* `startImmediate` - Whether or not you want to immediately start the timeout.
+
+### Returns
+* `{ start, cancel }`
+  * `start` – A function that starts the timeout, any running timeouts will automatically be cancelled.
+  * `cancel` – A function that will cancel the current active timeout.
+
+## Usage
+
+```ts
+const { start, cancel } = useTimeout(() => {
+  console.log('The timeout has run out')
+}, 1000, false);
+````
+
+```ts
+const Demo = defineComponent({
+  name: 'demo',
+  refs: {
+    startBtn: 'start-btn'
+    cancelButton: 'cancel-btn'
+  },
+  setup({ refs }) {
+    // The timeout runs as soon as the component is mounted.
+    useTimeout(() => {
+      console.log('The timeout has run out')
+    }, 1000);
+
+    // The timeout doesn't start automatically, but requires a user action to start.
+    const { start, cancel } = useTimeout(() => {
+      console.log('The timeout has run out')
+    }, 1000, false);
+
+    return [
+      bind(refs.startBtn, {
+        click() {
+         start(); // This actually starts the timeout.
+        }
+      }),
+      bind(refs.cancelButton, {
+        click() {
+          cancel(); // This cancels the timeout if it's active.
+        }
+      })
+    ]
+  }
+})
+```
