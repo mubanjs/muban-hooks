@@ -33,7 +33,11 @@ export const Demo: Story<DemoStoryProps> = () => ({
         }, 2000);
       }
 
-      const { start, cancel } = useTimeout(onTimeoutComplete, props.duration, props.startImmediate);
+      const { startTimeout, cancelTimeout } = useTimeout(
+        onTimeoutComplete,
+        props.duration,
+        props.startImmediate,
+      );
 
       function onTimeoutComplete() {
         isTimeoutRunning.value = false;
@@ -44,7 +48,7 @@ export const Demo: Story<DemoStoryProps> = () => ({
         bind(refs.label, {
           html: computed(() =>
             state
-              .map((msg) => html` <div class="alert alert-dismissible alert-info">${msg}</div>`)
+              .map((msg) => html`<div class="alert alert-dismissible alert-info">${msg}</div>`)
               .join(''),
           ),
         }),
@@ -54,7 +58,7 @@ export const Demo: Story<DemoStoryProps> = () => ({
           },
           click() {
             isTimeoutRunning.value = true;
-            start();
+            startTimeout();
           },
         }),
         bind(refs.cancelButton, {
@@ -64,13 +68,13 @@ export const Demo: Story<DemoStoryProps> = () => ({
           click() {
             isTimeoutRunning.value = false;
             log('canceled timeout');
-            cancel();
+            cancelTimeout();
           },
         }),
       ];
     },
   }),
-  template: ({ startImmediate = false, duration = 2000 }: DemoStoryProps = {}) => html` <div
+  template: ({ startImmediate = false, duration = 1000 }: DemoStoryProps = {}) => html` <div
     data-component="story"
     data-start-immediate=${startImmediate}
     data-duration=${duration}
@@ -78,7 +82,7 @@ export const Demo: Story<DemoStoryProps> = () => ({
     <div class="alert alert-primary">
       <h4 class="alert-heading">Instructions!</h4>
       <p class="mb-0">
-        The demo timeout is set to 2 seconds, you can start it by clicking the start button. You can
+        The demo timeout is set to 1 second, you can start it by clicking the start button. You can
         cancel the timeout by clicking the cancel button.
       </p>
     </div>

@@ -16,7 +16,7 @@ function useTimeout(
   callback: () => void,
   duration?: number = 100,
   startImmediate?: boolean = true,
-): { start: () => void, cancel: () => void }
+): { startTimeout: () => void, cancelTimeout: () => void }
 ```
 
 ### Parameters
@@ -25,14 +25,14 @@ function useTimeout(
 * `startImmediate` - Whether or not you want to immediately start the timeout.
 
 ### Returns
-* `{ start, cancel }`
-  * `start` – A function that starts the timeout, any running timeouts will automatically be cancelled.
-  * `cancel` – A function that will cancel the current active timeout.
+* `{ startTimeout, cancelTimeout }`
+  * `startTimeout` – A function that starts the timeout, any running timeouts will automatically be cancelled.
+  * `cancelTimeout` – A function that will cancel the current active timeout.
 
 ## Usage
 
 ```ts
-const { start, cancel } = useTimeout(() => {
+const { startTimeout, cancelTimeout } = useTimeout(() => {
   console.log('The timeout has run out')
 }, 1000, false);
 ````
@@ -41,8 +41,8 @@ const { start, cancel } = useTimeout(() => {
 const Demo = defineComponent({
   name: 'demo',
   refs: {
-    startBtn: 'start-btn'
-    cancelButton: 'cancel-btn'
+    startBtn: 'start-button'
+    cancelButton: 'cancel-button'
   },
   setup({ refs }) {
     // The timeout runs as soon as the component is mounted.
@@ -51,19 +51,19 @@ const Demo = defineComponent({
     }, 1000);
 
     // The timeout doesn't start automatically, but requires a user action to start.
-    const { start, cancel } = useTimeout(() => {
+    const { startTimeout, cancelTimeout } = useTimeout(() => {
       console.log('The timeout has run out')
     }, 1000, false);
 
     return [
       bind(refs.startBtn, {
         click() {
-         start(); // This actually starts the timeout.
+         startTimeout(); // This actually starts the timeout.
         }
       }),
       bind(refs.cancelButton, {
         click() {
-          cancel(); // This cancels the timeout if it's active.
+          cancelTimeout(); // This cancels the timeout if it's active.
         }
       })
     ]

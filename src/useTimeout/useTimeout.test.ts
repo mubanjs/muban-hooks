@@ -39,9 +39,9 @@ describe('useTimeout', () => {
 
     await runComponentSetup(
       () => {
-        const { start } = useTimeout(mockHandler, 1, false);
+        const { startTimeout } = useTimeout(mockHandler, 1, false);
 
-        start();
+        startTimeout();
       },
       () => timeout(2),
     );
@@ -54,11 +54,11 @@ describe('useTimeout', () => {
 
     await runComponentSetup(
       async () => {
-        const { start, cancel } = useTimeout(mockHandler, 2, false);
+        const { startTimeout, cancelTimeout } = useTimeout(mockHandler, 2, false);
 
-        start();
+        startTimeout();
         await timeout(1);
-        cancel();
+        cancelTimeout();
       },
       () => timeout(3),
     );
@@ -71,13 +71,13 @@ describe('useTimeout', () => {
 
     await runComponentSetup(
       async () => {
-        const { start } = useTimeout(mockHandler, 2, false);
+        const { startTimeout } = useTimeout(mockHandler, 2, false);
 
-        start();
+        startTimeout();
         await timeout(1);
-        start();
+        startTimeout();
       },
-      () => timeout(4),
+      () => timeout(5),
     );
 
     expect(mockHandler).toBeCalledTimes(1);

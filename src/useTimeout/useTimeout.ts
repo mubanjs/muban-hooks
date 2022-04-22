@@ -12,7 +12,7 @@ export const useTimeout = (
   callback: () => void,
   duration: number = 100,
   startImmediate: boolean = true,
-): { start: () => void; cancel: () => void } => {
+): { startTimeout: () => void; cancelTimeout: () => void } => {
   let handle = -1;
 
   function start() {
@@ -32,5 +32,5 @@ export const useTimeout = (
     if (startImmediate) start();
   });
 
-  return { start, cancel };
+  return { startTimeout: start, cancelTimeout: cancel };
 };
