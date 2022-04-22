@@ -1,9 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-import { bind, computed, defineComponent, reactive } from '@muban/muban';
+import { defineComponent } from '@muban/muban';
 import type { Story } from '@muban/storybook/types-6-0';
 import { html } from '@muban/template';
 import { useClickedOutside } from './useClickedOutside';
+import { useStorybookLog } from '../hooks/useStorybookLog';
 
 export default {
   title: 'useClickedOutside',
@@ -17,30 +18,13 @@ export const Demo: Story = () => ({
       label: 'label',
     },
     setup({ refs }) {
-      const state = reactive<Array<string>>([]);
-
-      const log = (message: string) => {
-        state.push(message);
-        setTimeout(() => {
-          state.splice(0, 1);
-        }, 2000);
-      };
+      const { log, logBinding } = useStorybookLog(refs.label);
 
       useClickedOutside(refs.testArea, () => {
         log('clicked outside the test area');
       });
 
-      return [
-        bind(refs.label, {
-          html: computed(() =>
-            state
-              .map(
-                (message) => html`<div class="alert alert-dismissible alert-info">${message}</div>`,
-              )
-              .join(''),
-          ),
-        }),
-      ];
+      return [logBinding];
     },
   }),
   template: () => html` <div data-component="story" data-initial-value="true">
