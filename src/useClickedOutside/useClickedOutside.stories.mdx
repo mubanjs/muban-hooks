@@ -1,0 +1,55 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta
+  title="useClickedOutside/docs"
+/>
+
+# useClickedOutside
+
+The `useClickedOutside` hook can be used to detect whether or not a user has clicked outside of a
+container or an Array of containers, it uses the `useEventListener` hook under the hood to make
+sure all events are cleaned when the component unmounts.
+
+## Reference
+
+```ts
+function useClickedOutside<T extends RefElementType>(
+  container: DomElementOrRef | DomElementsOrRefCollection,
+  callback: (event: MouseEvent) => void,
+  options?: { capture?: boolean; passive?: boolean },
+): void
+```
+
+### Parameters
+
+* `container` – The element or elements that should not cause the callback to be triggered, does also support Muban refs.
+* `callback` – The function to invoke when the user clicked on something that is not in the provided container.
+* `options` – The options passed to `addEventListener`.
+
+### Returns
+
+* `void`
+
+## Usage
+
+```ts
+useClickedOutside(refs.someContainer, (event) => {
+  console.log('clicked outside of the container', event.currentTarget);
+});
+````
+
+```ts
+const Demo = defineComponent({
+  name: 'demo',
+  setup({ refs, element }) {
+
+    // the hook can be applied to all types of refs
+    useClickedOutside(refs.someElement, () => console.log('clicked outside the element')
+
+    // Even though you will most likely only use refs you can also apply it on an HTMLElement directly.
+    useClickedOutside(element, () => console.log('clicked outside the component element')
+
+    return [];
+  }
+})
+```
