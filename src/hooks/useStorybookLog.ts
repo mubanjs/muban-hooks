@@ -11,7 +11,7 @@ import type { Binding } from '@muban/muban/types/lib/bindings/bindings.types';
  */
 export function useStorybookLog(
   logRef: ElementRef | ComponentRef<ComponentFactory>,
-): readonly [(message: string) => void, Binding, Array<string>] {
+): readonly [Binding, (message: string) => void] {
   const logs = reactive<Array<string>>([]);
 
   function log(message: string): void {
@@ -22,14 +22,13 @@ export function useStorybookLog(
   }
 
   return [
-    log,
     bind(logRef, {
       html: computed(() =>
         logs
-          .map((value) => html`<div class="alert alert-dismissible alert-info">${value}</div>`)
+          .map((value) => html` <div class="alert alert-dismissible alert-info">${value}</div>`)
           .join(''),
       ),
     }),
-    logs,
+    log,
   ];
 }

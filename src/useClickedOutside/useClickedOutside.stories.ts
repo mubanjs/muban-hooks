@@ -18,7 +18,7 @@ export const Demo: Story = () => ({
       label: 'label',
     },
     setup({ refs }) {
-      const [log, logBinding] = useStorybookLog(refs.label);
+      const [logBinding, log] = useStorybookLog(refs.label);
 
       useClickedOutside(refs.testArea, () => {
         log('clicked outside the test area');

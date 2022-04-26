@@ -25,7 +25,7 @@ export const Demo: Story = () => ({
       component: refComponent(Test),
     },
     setup({ refs }) {
-      const [log, logBinding] = useStorybookLog(refs.label);
+      const [logBinding, log] = useStorybookLog(refs.label);
 
       useEventListener(window, 'click', () => {
         log('clicked the window');
