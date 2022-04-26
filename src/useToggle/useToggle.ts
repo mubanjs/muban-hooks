@@ -1,4 +1,5 @@
-import { isRef, ref, Ref, unref, watchEffect } from '@muban/muban';
+import type { Ref } from '@muban/muban';
+import { isRef, ref, unref, watchEffect } from '@muban/muban';
 
 /**
  * Easily toggle value between two states
