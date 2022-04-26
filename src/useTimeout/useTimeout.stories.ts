@@ -62,7 +62,7 @@ export const Demo: Story<DemoStoryProps> = () => ({
       ];
     },
   }),
-  template: ({ startImmediate = false, duration = 1000 }: DemoStoryProps = {}) => html` <div
+  template: ({ startImmediate = false, duration = 1000 }: DemoStoryProps = {}) => html`<div
     data-component="story"
     data-start-immediate=${startImmediate}
     data-duration=${duration}
