@@ -25,7 +25,7 @@ export function useStorybookLog(
     bind(logRef, {
       html: computed(() =>
         logs
-          .map((value) => html` <div class="alert alert-dismissible alert-info">${value}</div>`)
+          .map((value) => html`<div class="alert alert-dismissible alert-info">${value}</div>`)
           .join(''),
       ),
     }),
