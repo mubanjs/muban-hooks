@@ -1,0 +1,43 @@
+/* eslint-disable import/no-extraneous-dependencies */
+import { defineComponent } from '@muban/muban';
+import type { Story } from '@muban/storybook/types-6-0';
+import { html } from '@muban/template';
+import { {{camelCase hookName}} } from './{{camelCase hookName}}';
+import { useStorybookLog } from '../hooks/useStorybookLog';
+
+export default {
+  title: '{{camelCase hookName}}',
+};
+
+export const Demo: Story = () => ({
+  component: defineComponent({
+    name: 'story',
+    refs: {
+      testArea: 'test-area',
+      label: 'label',
+    },
+    setup({ refs }) {
+      // TODO: call the `log` function to notify the UI about any events
+      const [logBinding, log] = useStorybookLog(refs.label);
+
+      // TODO: Implement the hook
+      {{camelCase hookName}}();
+
+      return [logBinding];
+    },
+  }),
+  template: () => html`<div data-component="story">
+    <div class="alert alert-primary">
+      <h4 class="alert-heading">Instructions!</h4>
+      <p class="mb-0">Add instructions about the hook here.</p>
+    </div>
+    <div data-ref="label" />
+    <div class="card border-dark" data-ref="test-area">
+      <div class="card-header">Test Area</div>
+      <div class="card-body">
+        <p>TODO: Implement a test case for the hook.</p>
+      </div>
+    </div>
+  </div>`,
+});
+Demo.storyName = 'demo';
