@@ -1,10 +1,9 @@
-/* eslint-disable unicorn/prevent-abbreviations,import/no-extraneous-dependencies */
-// import UseToggleDocs from './useEventListener.docs.mdx';
-
-import { bind, computed, defineComponent, reactive, refComponent } from '@muban/muban';
+/* eslint-disable import/no-extraneous-dependencies */
+import { defineComponent, refComponent } from '@muban/muban';
 import type { Story } from '@muban/storybook/types-6-0';
 import { html } from '@muban/template';
 import { useEventListener } from './useEventListener';
+import { useStorybookLog } from '../hooks/useStorybookLog';
 
 export default {
   title: 'useEventListener',
@@ -26,14 +25,7 @@ export const Demo: Story = () => ({
       component: refComponent(Test),
     },
     setup({ refs }) {
-      const state = reactive<Array<string>>([]);
-
-      const log = (message: string) => {
-        state.push(message);
-        setTimeout(() => {
-          state.splice(0, 1);
-        }, 2000);
-      };
+      const [logBinding, log] = useStorybookLog(refs.label);
 
       useEventListener(window, 'click', () => {
         log('clicked the window');
@@ -48,15 +40,7 @@ export const Demo: Story = () => ({
         log('clicked the component');
       });
 
-      return [
-        bind(refs.label, {
-          html: computed(() =>
-            state
-              .map((msg) => html`<div class="alert alert-dismissible alert-info">${msg}</div>`)
-              .join(''),
-          ),
-        }),
-      ];
+      return [logBinding];
     },
   }),
   template: () => html`<div data-component="story" data-initial-value="true">
