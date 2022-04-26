@@ -1,8 +1,9 @@
-/* eslint-disable unicorn/prevent-abbreviations,import/no-extraneous-dependencies */
-import { bind, computed, defineComponent, reactive } from '@muban/muban';
+/* eslint-disable import/no-extraneous-dependencies */
+import { defineComponent } from '@muban/muban';
 import type { Story } from '@muban/storybook/types-6-0';
 import { html } from '@muban/template';
 import { useKeyboardEvent } from './useKeyboardEvent';
+import { useStorybookLog } from '../hooks/useStorybookLog';
 
 export default {
   title: 'useKeyboardEvent',
@@ -16,14 +17,7 @@ export const Demo: Story = () => ({
       inputField: 'input-field',
     },
     setup({ refs }) {
-      const state = reactive<Array<string>>([]);
-
-      const log = (message: string) => {
-        state.push(message);
-        setTimeout(() => {
-          state.splice(0, 1);
-        }, 2000);
-      };
+      const [logBinding, log] = useStorybookLog(refs.label);
 
       useKeyboardEvent('Enter', () => {
         log('pressed the `Enter` key');
@@ -39,15 +33,7 @@ export const Demo: Story = () => ({
         refs.inputField,
       );
 
-      return [
-        bind(refs.label, {
-          html: computed(() =>
-            state
-              .map((msg) => html`<div class="alert alert-dismissible alert-info">${msg}</div>`)
-              .join(''),
-          ),
-        }),
-      ];
+      return [logBinding];
     },
   }),
   template: () => html` <div data-component="story" data-ref="root">
