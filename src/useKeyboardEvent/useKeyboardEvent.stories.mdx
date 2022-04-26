@@ -61,13 +61,13 @@ const Demo = defineComponent({
   },
   setup({ refs }) {
 
-    // The default event is bound to the document and you can use
+    // The default event is bound to the document and you can use.
     useKeyboardEvent('a', () => console.log('The `a` key is pressed.'));
 
-    // You can also use the `ts-key-enum` to reference keys
+    // You can also use the `ts-key-enum` to reference keys.
     useKeyboardEvent(Key.ArrowLeft, () => console.log('The `ArrowLeft` key is pressed.'));
 
-    // You can add multiple keys to your listener, either through the `ts-key-enum` or a `string`
+    // You can add multiple keys to your listener.
     useKeyboardEvent([Key.ArrowUp, Key.ArrowDown], () => console.log('The `ArrowLeft` or `ArrowDown` key was pressed.'));
 
     // You can even overwrite the default target to something else if you don't want the document.
