@@ -16,9 +16,9 @@ describe('useTimeout', () => {
 
     await runComponentSetup(
       () => {
-        useTimeout(mockHandler, 1);
+        useTimeout(mockHandler, 100);
       },
-      () => timeout(2),
+      () => timeout(200),
     );
 
     expect(mockHandler).toBeCalledTimes(1);
@@ -28,7 +28,7 @@ describe('useTimeout', () => {
     const mockHandler = jest.fn();
 
     await runComponentSetup(() => {
-      useTimeout(mockHandler, 1);
+      useTimeout(mockHandler, 100);
     });
 
     expect(mockHandler).toBeCalledTimes(0);
@@ -38,12 +38,11 @@ describe('useTimeout', () => {
     const mockHandler = jest.fn();
 
     await runComponentSetup(
-      () => {
-        const { startTimeout } = useTimeout(mockHandler, 1, false);
-
+      () => useTimeout(mockHandler, 100, false),
+      async ({ startTimeout }) => {
         startTimeout();
+        await timeout(200);
       },
-      () => timeout(2),
     );
 
     expect(mockHandler).toBeCalledTimes(1);
@@ -53,14 +52,12 @@ describe('useTimeout', () => {
     const mockHandler = jest.fn();
 
     await runComponentSetup(
-      async () => {
-        const { startTimeout, cancelTimeout } = useTimeout(mockHandler, 2, false);
-
+      () => useTimeout(mockHandler, 500, false),
+      async ({ startTimeout, cancelTimeout }) => {
         startTimeout();
-        await timeout(1);
+        await timeout(100);
         cancelTimeout();
       },
-      () => timeout(3),
     );
 
     expect(mockHandler).toBeCalledTimes(0);
@@ -70,14 +67,13 @@ describe('useTimeout', () => {
     const mockHandler = jest.fn();
 
     await runComponentSetup(
-      async () => {
-        const { startTimeout } = useTimeout(mockHandler, 2, false);
-
+      () => useTimeout(mockHandler, 200, false),
+      async ({ startTimeout }) => {
         startTimeout();
-        await timeout(1);
+        await timeout(100);
         startTimeout();
+        await timeout(300);
       },
-      () => timeout(5),
     );
 
     expect(mockHandler).toBeCalledTimes(1);
