@@ -1,8 +1,9 @@
-/* eslint-disable unicorn/prevent-abbreviations,import/no-extraneous-dependencies */
-import { bind, computed, defineComponent, propType, reactive, ref } from '@muban/muban';
+/* eslint-disable import/no-extraneous-dependencies */
+import { bind, computed, defineComponent, propType, ref } from '@muban/muban';
 import type { Story } from '@muban/storybook/types-6-0';
 import { html } from '@muban/template';
 import { useInterval } from './useInterval';
+import { useStorybookLog } from '../hooks/useStorybookLog';
 
 export default {
   title: 'useInterval',
@@ -20,18 +21,11 @@ export const Demo: Story<DemoStoryProps> = () => ({
     refs: {
       label: 'label',
       startButton: 'start-button',
-      cancelButton: 'cancel-button',
+      stopButton: 'stop-button',
     },
     setup({ refs, props }) {
-      const state = reactive<Array<string>>([]);
+      const [logBinding, log] = useStorybookLog(refs.label);
       const isIntervalRunning = ref(false);
-
-      function log(message: string) {
-        state.push(message);
-        setTimeout(() => {
-          state.splice(0, 1);
-        }, 2000);
-      }
 
       const { startInterval, stopInterval } = useInterval(
         onInterval,
@@ -44,13 +38,7 @@ export const Demo: Story<DemoStoryProps> = () => ({
       }
 
       return [
-        bind(refs.label, {
-          html: computed(() =>
-            state
-              .map((msg) => html`<div class="alert alert-dismissible alert-info">${msg}</div>`)
-              .join(''),
-          ),
-        }),
+        logBinding,
         bind(refs.startButton, {
           attr: {
             disabled: isIntervalRunning,
@@ -60,7 +48,7 @@ export const Demo: Story<DemoStoryProps> = () => ({
             startInterval();
           },
         }),
-        bind(refs.cancelButton, {
+        bind(refs.stopButton, {
           attr: {
             disabled: computed(() => !isIntervalRunning.value),
           },
@@ -73,7 +61,7 @@ export const Demo: Story<DemoStoryProps> = () => ({
       ];
     },
   }),
-  template: ({ startImmediate = false, interval = 1000 }: DemoStoryProps = {}) => html` <div
+  template: ({ startImmediate = false, interval = 2500 }: DemoStoryProps = {}) => html`<div
     data-component="story"
     data-start-immediate=${startImmediate}
     data-interval=${interval}
@@ -81,19 +69,19 @@ export const Demo: Story<DemoStoryProps> = () => ({
     <div class="alert alert-primary">
       <h4 class="alert-heading">Instructions!</h4>
       <p class="mb-0">
-        The demo interval is set to 1 second, you can start it by clicking the start button. You can
-        stop the interval by clicking the cancel button.
+        The demo interval is set to 2.5 seconds, you can start it by clicking the start button. You
+        can stop the interval by clicking the stop button.
       </p>
     </div>
     <div data-ref="label" />
     <div class="card border-dark">
       <div class="card-header">Test Area</div>
       <div class="card-body">
-        <button type="button" data-ref="start-button" class="btn btn-primary">Start timeout</button>
-        ${' '}
-        <button type="button" data-ref="cancel-button" class="btn btn-danger">
-          Cancel timeout
+        <button type="button" data-ref="start-button" class="btn btn-primary">
+          Start interval
         </button>
+        ${' '}
+        <button type="button" data-ref="stop-button" class="btn btn-danger">Stop interval</button>
       </div>
     </div>
   </div>`,
