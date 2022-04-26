@@ -1,8 +1,9 @@
 /* eslint-disable unicorn/prevent-abbreviations,import/no-extraneous-dependencies */
-import { bind, computed, defineComponent, propType, reactive, ref } from '@muban/muban';
+import { bind, computed, defineComponent, propType, ref } from '@muban/muban';
 import type { Story } from '@muban/storybook/types-6-0';
 import { html } from '@muban/template';
 import { useTimeout } from './useTimeout';
+import { useStorybookLog } from '../hooks/useStorybookLog';
 
 export default {
   title: 'useTimeout',
@@ -23,15 +24,8 @@ export const Demo: Story<DemoStoryProps> = () => ({
       cancelButton: 'cancel-button',
     },
     setup({ refs, props }) {
-      const state = reactive<Array<string>>([]);
+      const [logBinding, log] = useStorybookLog(refs.label);
       const isTimeoutRunning = ref(false);
-
-      function log(message: string) {
-        state.push(message);
-        setTimeout(() => {
-          state.splice(0, 1);
-        }, 2000);
-      }
 
       const { startTimeout, cancelTimeout } = useTimeout(
         onTimeoutComplete,
@@ -45,13 +39,7 @@ export const Demo: Story<DemoStoryProps> = () => ({
       }
 
       return [
-        bind(refs.label, {
-          html: computed(() =>
-            state
-              .map((msg) => html`<div class="alert alert-dismissible alert-info">${msg}</div>`)
-              .join(''),
-          ),
-        }),
+        logBinding,
         bind(refs.startButton, {
           attr: {
             disabled: isTimeoutRunning,
