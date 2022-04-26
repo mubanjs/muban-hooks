@@ -46,12 +46,14 @@ function useKeyboardEvent(
 ## Usage
 
 ```ts
-useKeyboardEvent(Key.ArrowRight, (event: KeyboardEvent) => {
+useKeyboardEvent('ArrowRight', (event: KeyboardEvent) => {
   console.log('The arrow right is pressed', event.currentTarget);
 });
 ````
 
 ```ts
+import { Key } from "ts-key-enum"
+
 const Demo = defineComponent({
   name: 'demo',
   refs: {
@@ -59,14 +61,17 @@ const Demo = defineComponent({
   },
   setup({ refs }) {
 
-    // The default event is bound to the document
-    useKeyboardEvent(Key.ArrowRight, () => console.log('The `ArrowRight` key is pressed.'));
+    // The default event is bound to the document and you can use
+    useKeyboardEvent('a', () => console.log('The `a` key is pressed.'));
+
+    // You can also use the `ts-key-enum` to reference keys
+    useKeyboardEvent(Key.ArrowLeft, () => console.log('The `ArrowLeft` key is pressed.'));
 
     // You can add multiple keys to your listener, either through the `ts-key-enum` or a `string`
-    useKeyboardEvent([Key.ArrowLeft, 'a'], () => console.log('The `ArrowLeft` or `a` key was pressed.'));
+    useKeyboardEvent([Key.ArrowUp, Key.ArrowDown], () => console.log('The `ArrowLeft` or `ArrowDown` key was pressed.'));
 
     // You can even overwrite the default target to something else if you don't want the document.
-    useEventListener(Key.ArrowUp, () => console.log('The `ArrowUp` is pressed.'), refs.someRef);
+    useEventListener(Key.Enter, () => console.log('The `Enter` is pressed.'), refs.someRef);
 
     return [];
   }
