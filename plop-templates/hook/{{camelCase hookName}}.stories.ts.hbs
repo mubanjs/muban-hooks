@@ -18,6 +18,7 @@ export const Demo: Story = () => ({
     },
     setup({ refs }) {
       // TODO: call the `log` function to notify the UI about any events
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [logBinding, log] = useStorybookLog(refs.label);
 
       // TODO: Implement the hook
