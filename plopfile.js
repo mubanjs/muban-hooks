@@ -29,7 +29,7 @@ module.exports = function(plop) {
           type: 'append',
           path: 'src/index.ts',
           pattern: /(\/\* PLOP_ADD_EXPORT \*\/)/gi,
-          template: `export * from './{{pascalCase hookName}}/{{pascalCase hookName}}';`,
+          template: `export * from './{{camelCase hookName}}/{{camelCase hookName}}';`,
         },
       ];
     },
