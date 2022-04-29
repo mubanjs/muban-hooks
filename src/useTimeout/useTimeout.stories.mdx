@@ -25,14 +25,15 @@ function useTimeout(
 * `startImmediate` - Whether or not you want to immediately start the timeout.
 
 ### Returns
-* `{ startTimeout, cancelTimeout }`
+* `{ startTimeout, cancelTimeout, isTimeoutRunning }`
   * `startTimeout` – A function that starts the timeout, any running timeouts will automatically be cancelled.
   * `cancelTimeout` – A function that will cancel the current active timeout.
+  * `isTimeoutRunning` – A computed ref that keeps track whether or not the timeout is running.
 
 ## Usage
 
 ```ts
-const { startTimeout, cancelTimeout } = useTimeout(() => {
+const { startTimeout, cancelTimeout, isTimeoutRunning } = useTimeout(() => {
   console.log('The timeout has run out')
 }, 1000, false);
 ````
