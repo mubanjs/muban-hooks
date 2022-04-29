@@ -1,33 +1,36 @@
 import { runComponentSetup } from '@muban/test-utils';
-import { timeout } from '../useTimeout/useTimeout.test.utils';
 import { useInterval } from './useInterval';
 
 jest.mock('@muban/muban', () => jest.requireActual('@muban/test-utils').getMubanLifecycleMock());
 
 describe('useInterval', () => {
-  it('should not crash', async () => {
-    await runComponentSetup(() => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  it('should not crash', () => {
+    runComponentSetup(() => {
       useInterval(() => undefined);
     });
   });
 
-  it('should start immediate and not be completed', async () => {
+  it('should start immediate and not be completed', () => {
     const mockHandler = jest.fn();
 
-    await runComponentSetup(() => {
+    runComponentSetup(() => {
       useInterval(mockHandler, 100);
     });
 
     expect(mockHandler).toBeCalledTimes(0);
   });
 
-  it('should start immediate and be called once', async () => {
+  it('should start immediate and be called once', () => {
     const mockHandler = jest.fn();
 
-    await runComponentSetup(
+    runComponentSetup(
       () => useInterval(mockHandler, 100),
-      async ({ stopInterval }) => {
-        await timeout(100);
+      ({ stopInterval }) => {
+        jest.advanceTimersByTime(100);
         stopInterval();
       },
     );
@@ -35,14 +38,14 @@ describe('useInterval', () => {
     expect(mockHandler).toBeCalledTimes(1);
   });
 
-  it('should trigger start and be stopped after three calls', async () => {
+  it('should trigger start and be stopped after three calls', () => {
     const mockHandler = jest.fn();
 
-    await runComponentSetup(
+    runComponentSetup(
       () => useInterval(mockHandler, 100, false),
-      async ({ startInterval, stopInterval }) => {
+      ({ startInterval, stopInterval }) => {
         startInterval();
-        await timeout(400);
+        jest.advanceTimersByTime(300);
         stopInterval();
       },
     );
@@ -50,14 +53,14 @@ describe('useInterval', () => {
     expect(mockHandler).toBeCalledTimes(3);
   });
 
-  it('should trigger stop once the interval is started', async () => {
+  it('should trigger stop once the interval is started', () => {
     const mockHandler = jest.fn();
 
-    await runComponentSetup(
+    runComponentSetup(
       () => useInterval(mockHandler, 200, false),
-      async ({ startInterval, stopInterval }) => {
+      ({ startInterval, stopInterval }) => {
         startInterval();
-        await timeout(100);
+        jest.advanceTimersByTime(100);
         stopInterval();
       },
     );
@@ -65,14 +68,14 @@ describe('useInterval', () => {
     expect(mockHandler).toBeCalledTimes(0);
   });
 
-  it('should know that the interval is running', async () => {
+  it('should know that the interval is running', () => {
     const mockHandler = jest.fn();
 
-    await runComponentSetup(
+    runComponentSetup(
       () => useInterval(mockHandler, 200, false),
-      async ({ startInterval, stopInterval, isIntervalRunning }) => {
+      ({ startInterval, stopInterval, isIntervalRunning }) => {
         startInterval();
-        await timeout(100);
+        jest.advanceTimersByTime(100);
         expect(isIntervalRunning.value).toEqual(true);
         stopInterval();
         expect(isIntervalRunning.value).toEqual(false);
@@ -80,16 +83,16 @@ describe('useInterval', () => {
     );
   });
 
-  it('should start a new interval before the old one was triggered and only complete once', async () => {
+  it('should start a new interval before the old one was triggered and only complete once', () => {
     const mockHandler = jest.fn();
 
-    await runComponentSetup(
+    runComponentSetup(
       () => useInterval(mockHandler, 100, false),
-      async ({ startInterval }) => {
+      ({ startInterval }) => {
         startInterval();
-        await timeout(50);
+        jest.advanceTimersByTime(50);
         startInterval();
-        await timeout(100);
+        jest.advanceTimersByTime(100);
       },
     );
 
