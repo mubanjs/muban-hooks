@@ -48,6 +48,21 @@ describe('useTimeout', () => {
     expect(mockHandler).toBeCalledTimes(1);
   });
 
+  it('should know that the timeout is running', () => {
+    const mockHandler = jest.fn();
+
+    runComponentSetup(
+      () => useTimeout(mockHandler, 200, false),
+      ({ startTimeout, cancelTimeout, isTimeoutRunning }) => {
+        startTimeout();
+        jest.advanceTimersByTime(100);
+        expect(isTimeoutRunning.value).toEqual(true);
+        cancelTimeout();
+        expect(isTimeoutRunning.value).toEqual(false);
+      },
+    );
+  });
+
   it('should trigger cancel once the timeout is started', () => {
     const mockHandler = jest.fn();
 
