@@ -16,7 +16,7 @@ function useInterval(
   callback: () => void,
   interval?: number = 100,
   startImmediate?: boolean = true,
-): { startInterval: () => void, stopInterval: () => void }
+): { startInterval: () => void, stopInterval: () => void; isIntervalRunning: ComputedRef<boolean> }
 ```
 
 ### Parameters
