@@ -27,16 +27,16 @@ export const Demo: Story<DemoStoryProps> = () => ({
       const [logBinding, log] = useStorybookLog(refs.label);
       const isTimeoutRunning = ref(false);
 
+      function onTimeoutComplete() {
+        isTimeoutRunning.value = false;
+        log('timeout complete');
+      }
+
       const { startTimeout, cancelTimeout } = useTimeout(
         onTimeoutComplete,
         props.duration,
         props.startImmediate,
       );
-
-      function onTimeoutComplete() {
-        isTimeoutRunning.value = false;
-        log('timeout complete');
-      }
 
       return [
         logBinding,

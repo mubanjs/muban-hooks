@@ -26,15 +26,15 @@ export const Demo: Story<DemoStoryProps> = () => ({
     setup({ refs, props }) {
       const [logBinding, log] = useStorybookLog(refs.label);
 
+      function onInterval() {
+        log('interval called');
+      }
+
       const { startInterval, stopInterval, isIntervalRunning } = useInterval(
         onInterval,
         props.interval,
         props.startImmediate,
       );
-
-      function onInterval() {
-        log('interval called');
-      }
 
       return [
         logBinding,
@@ -58,29 +58,31 @@ export const Demo: Story<DemoStoryProps> = () => ({
       ];
     },
   }),
-  template: ({ startImmediate = false, interval = 2500 }: DemoStoryProps = {}) => html`<div
-    data-component="story"
-    data-start-immediate=${startImmediate}
-    data-interval=${interval}
-  >
-    <div class="alert alert-primary">
-      <h4 class="alert-heading">Instructions!</h4>
-      <p class="mb-0">
-        The demo interval is set to 2.5 seconds, you can start it by clicking the start button. You
-        can stop the interval by clicking the stop button.
-      </p>
-    </div>
-    <div data-ref="label" />
-    <div class="card border-dark">
-      <div class="card-header">Test Area</div>
-      <div class="card-body">
-        <button type="button" data-ref="start-button" class="btn btn-primary">
-          Start interval
-        </button>
-        ${' '}
-        <button type="button" data-ref="stop-button" class="btn btn-danger">Stop interval</button>
+  template: ({ startImmediate = false, interval = 2500 }: DemoStoryProps = {}) => html`
+    <div
+      data-component="story"
+      data-start-immediate=${startImmediate}
+      data-interval=${interval}
+    >
+      <div class="alert alert-primary">
+        <h4 class="alert-heading">Instructions!</h4>
+        <p class="mb-0">
+          The demo interval is set to 2.5 seconds, you can start it by clicking the start button.
+          You
+          can stop the interval by clicking the stop button.
+        </p>
       </div>
-    </div>
-  </div>`,
+      <div data-ref="label" />
+      <div class="card border-dark">
+        <div class="card-header">Test Area</div>
+        <div class="card-body">
+          <button type="button" data-ref="start-button" class="btn btn-primary">
+            Start interval
+          </button>
+        ${' '}
+          <button type="button" data-ref="stop-button" class="btn btn-danger">Stop interval</button>
+        </div>
+      </div>
+    </div>`,
 });
 Demo.storyName = 'demo';
