@@ -41,7 +41,7 @@
     "plop": "plop"
   },
   "peerDependencies": {
-    "@muban/muban": "^1.0.0-alpha.28"
+    "@muban/muban": "^1.0.0-alpha.34"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
