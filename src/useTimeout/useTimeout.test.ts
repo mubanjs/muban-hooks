@@ -14,7 +14,7 @@ describe('useTimeout', () => {
     });
   });
 
-  it('should start immediate and be completed after 1ms', () => {
+  it('should start immediate and be completed after 100ms', () => {
     const mockHandler = jest.fn();
 
     runComponentSetup(() => {
@@ -35,7 +35,7 @@ describe('useTimeout', () => {
     expect(mockHandler).toBeCalledTimes(0);
   });
 
-  it('should trigger start and be completed after 1ms', () => {
+  it('should trigger start and be completed after 100ms', () => {
     const mockHandler = jest.fn();
 
     runComponentSetup(
