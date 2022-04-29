@@ -1,0 +1,11 @@
+import '@testing-library/jest-dom';
+import { render } from '@muban/testing-library';
+import { Demo } from './{{camelCase hookName}}.stories';
+
+describe('{{camelCase hookName}} stories', () => {
+  it('should render', () => {
+    const { getByText } = render(Demo);
+
+    expect(getByText('Test Area')).toBeInTheDocument();
+  });
+});
