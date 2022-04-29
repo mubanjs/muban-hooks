@@ -19,17 +19,17 @@ export const useInterval = (
   isIntervalRunning: ComputedRef<boolean>;
 } => {
   const isIntervalRunning = ref(false);
-  let handle = -1;
+  let intervalId = -1;
 
   function start() {
     stop();
+    intervalId = setInterval(callback, interval) as unknown as number;
     isIntervalRunning.value = true;
-    handle = setInterval(callback, interval) as unknown as number;
   }
 
   function stop() {
+    clearInterval(intervalId);
     isIntervalRunning.value = false;
-    clearInterval(handle);
   }
 
   onUnmounted(() => {
