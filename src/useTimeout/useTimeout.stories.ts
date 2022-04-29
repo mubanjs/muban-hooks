@@ -25,14 +25,12 @@ export const Demo: Story<DemoStoryProps> = () => ({
     },
     setup({ refs, props }) {
       const [logBinding, log] = useStorybookLog(refs.label);
-      const isTimeoutRunning = ref(false);
 
       function onTimeoutComplete() {
-        isTimeoutRunning.value = false;
         log('timeout complete');
       }
 
-      const { startTimeout, cancelTimeout } = useTimeout(
+      const { startTimeout, cancelTimeout, isTimeoutRunning } = useTimeout(
         onTimeoutComplete,
         props.duration,
         props.startImmediate,
@@ -45,7 +43,6 @@ export const Demo: Story<DemoStoryProps> = () => ({
             disabled: isTimeoutRunning,
           },
           click() {
-            isTimeoutRunning.value = true;
             startTimeout();
           },
         }),
@@ -54,7 +51,6 @@ export const Demo: Story<DemoStoryProps> = () => ({
             disabled: computed(() => !isTimeoutRunning.value),
           },
           click() {
-            isTimeoutRunning.value = false;
             log('canceled timeout');
             cancelTimeout();
           },
