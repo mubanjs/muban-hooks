@@ -2,7 +2,6 @@ import '@testing-library/jest-dom';
 import { waitFor, render } from '@muban/testing-library';
 import userEvent from '@testing-library/user-event';
 import { Demo } from './useInterval.stories';
-import { timeout } from '../useTimeout/useTimeout.test.utils';
 
 describe('useInterval stories', () => {
   const { click } = userEvent.setup();
