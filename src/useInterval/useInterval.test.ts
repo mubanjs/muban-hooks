@@ -62,6 +62,7 @@ describe('useInterval', () => {
         startInterval();
         jest.advanceTimersByTime(100);
         stopInterval();
+        jest.advanceTimersByTime(200);
       },
     );
 
