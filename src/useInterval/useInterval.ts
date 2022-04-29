@@ -1,5 +1,8 @@
-import type { Ref } from '@muban/muban';
-import { ref, onMounted, onUnmounted, readonly } from '@muban/muban';
+import type { ComputedRef } from '@muban/muban';
+import { ref, onMounted, onUnmounted, computed } from '@muban/muban';
+
+// We use `-1` as the value to indicate that an interval is not running.
+const NOT_RUNNING = -1;
 
 /**
  *  A hook that can be used to call a function on a provided interval, by default the interval
@@ -16,20 +19,18 @@ export const useInterval = (
 ): {
   startInterval: () => void;
   stopInterval: () => void;
-  isIntervalRunning: Readonly<Ref<boolean>>;
+  isIntervalRunning: ComputedRef<boolean>;
 } => {
-  const isIntervalRunning = ref(false);
-  let intervalId = -1;
+  const intervalId = ref<number>(NOT_RUNNING);
 
   function start() {
     stop();
-    intervalId = setInterval(callback, interval) as unknown as number;
-    isIntervalRunning.value = true;
+    intervalId.value = setInterval(callback, interval) as unknown as number;
   }
 
   function stop() {
-    clearInterval(intervalId);
-    isIntervalRunning.value = false;
+    clearInterval(intervalId.value);
+    intervalId.value = NOT_RUNNING;
   }
 
   onUnmounted(() => {
@@ -43,6 +44,6 @@ export const useInterval = (
   return {
     startInterval: start,
     stopInterval: stop,
-    isIntervalRunning: readonly(isIntervalRunning),
+    isIntervalRunning: computed(() => intervalId.value !== NOT_RUNNING),
   };
 };
