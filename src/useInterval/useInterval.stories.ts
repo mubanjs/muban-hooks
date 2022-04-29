@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { bind, computed, defineComponent, propType, ref } from '@muban/muban';
+import { bind, computed, defineComponent, propType } from '@muban/muban';
 import type { Story } from '@muban/storybook/types-6-0';
 import { html } from '@muban/template';
 import { useInterval } from './useInterval';
