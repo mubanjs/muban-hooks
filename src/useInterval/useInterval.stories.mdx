@@ -1,0 +1,73 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta
+  title="useInterval/docs"
+/>
+
+# useInterval
+
+The `useInterval` hook is a wrapper around the native `setInterval`, it allows you to easily set
+an interval within your component that will be auto cancelled when the component unmounts.
+
+## Reference
+
+```ts
+function useInterval(
+  callback: () => void,
+  interval?: number = 100,
+  startImmediate?: boolean = true,
+): { startInterval: () => void, stopInterval: () => void; isIntervalRunning: ComputedRef<boolean> }
+```
+
+### Parameters
+* `callback` – The callback you want to trigger once the interval runs.
+* `interval` - The duration of the interval you want to create.
+* `startImmediate` - Whether or not you want to immediately start the interval.
+
+### Returns
+* `{ startInterval, stopInterval, isIntervalRunning }`
+  * `startInterval` – A function that starts the interval, any running intervals will automatically be stopped.
+  * `stopInterval` – A function that will stop the current active interval.
+  * `isIntervalRunning` – A computed ref that keeps track whether or not the interval is running.
+
+## Usage
+
+```ts
+const { startInterval, stopInterval, isIntervalRunning } = useInterval(() => {
+  console.log('The interval has run')
+}, 1000, false);
+````
+
+```ts
+const Demo = defineComponent({
+  name: 'demo',
+  refs: {
+    startBtn: 'start-button'
+    stopButton: 'stop-button'
+  },
+  setup({ refs }) {
+    // The interval starts as soon as the component is mounted.
+    useInterval(() => {
+      console.log('The immediate interval callback is triggered.')
+    }, 1000);
+
+    // The interval doesn't start automatically, but requires a user action to start.
+    const { startInterval, stopInterval, isIntervalRunning } = useInterval(() => {
+      console.log('The user-action interval callback is triggered.')
+    }, 1000, false);
+
+    return [
+      bind(refs.startBtn, {
+        click() {
+         startInterval(); // This actually starts the interval.
+        }
+      }),
+      bind(refs.stopButton, {
+        click() {
+          stopInterval(); // This stops the interval if it's active.
+        }
+      })
+    ]
+  }
+})
+```
