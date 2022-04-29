@@ -25,9 +25,8 @@ export const Demo: Story<DemoStoryProps> = () => ({
     },
     setup({ refs, props }) {
       const [logBinding, log] = useStorybookLog(refs.label);
-      const isIntervalRunning = ref(false);
 
-      const { startInterval, stopInterval } = useInterval(
+      const { startInterval, stopInterval, isIntervalRunning } = useInterval(
         onInterval,
         props.interval,
         props.startImmediate,
@@ -44,7 +43,6 @@ export const Demo: Story<DemoStoryProps> = () => ({
             disabled: isIntervalRunning,
           },
           click() {
-            isIntervalRunning.value = true;
             startInterval();
           },
         }),
@@ -53,7 +51,6 @@ export const Demo: Story<DemoStoryProps> = () => ({
             disabled: computed(() => !isIntervalRunning.value),
           },
           click() {
-            isIntervalRunning.value = false;
             log('interval stopped');
             stopInterval();
           },

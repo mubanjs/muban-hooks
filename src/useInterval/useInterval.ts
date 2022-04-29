@@ -1,4 +1,6 @@
-import { onMounted, onUnmounted } from '@muban/muban';
+import type { ComputedRef } from '@muban/muban';
+import { computed, onMounted, onUnmounted } from '@muban/muban';
+import { ref } from '@muban/muban/dist/esm';
 
 /**
  *  A hook that can be used to call a function on a provided interval, by default the interval
@@ -12,15 +14,22 @@ export const useInterval = (
   callback: () => void,
   interval: number = 100,
   startImmediate: boolean = true,
-): { startInterval: () => void; stopInterval: () => void } => {
+): {
+  startInterval: () => void;
+  stopInterval: () => void;
+  isIntervalRunning: ComputedRef<boolean>;
+} => {
+  const isIntervalRunning = ref(false);
   let handle = -1;
 
   function start() {
     stop();
+    isIntervalRunning.value = true;
     handle = setInterval(callback, interval) as unknown as number;
   }
 
   function stop() {
+    isIntervalRunning.value = false;
     clearInterval(handle);
   }
 
@@ -32,5 +41,9 @@ export const useInterval = (
     if (startImmediate) start();
   });
 
-  return { startInterval: start, stopInterval: stop };
+  return {
+    startInterval: start,
+    stopInterval: stop,
+    isIntervalRunning: computed(() => isIntervalRunning.value),
+  };
 };

@@ -25,14 +25,15 @@ function useInterval(
 * `startImmediate` - Whether or not you want to immediately start the interval.
 
 ### Returns
-* `{ startInterval, stopInterval }`
+* `{ startInterval, stopInterval, isIntervalRunning }`
   * `startInterval` – A function that starts the interval, any running intervals will automatically be stopped.
   * `stopInterval` – A function that will stop the current active interval.
+  * `isIntervalRunning` – A computed ref that keeps track whether or not the interval is running.
 
 ## Usage
 
 ```ts
-const { startInterval, stopInterval } = useInterval(() => {
+const { startInterval, stopInterval, isIntervalRunning } = useInterval(() => {
   console.log('The interval has run')
 }, 1000, false);
 ````
@@ -51,7 +52,7 @@ const Demo = defineComponent({
     }, 1000);
 
     // The interval doesn't start automatically, but requires a user action to start.
-    const { startInterval, stopInterval } = useInterval(() => {
+    const { startInterval, stopInterval, isIntervalRunning } = useInterval(() => {
       console.log('The user-action interval callback is triggered.')
     }, 1000, false);
 

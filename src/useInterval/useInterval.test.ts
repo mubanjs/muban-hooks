@@ -65,13 +65,26 @@ describe('useInterval', () => {
     expect(mockHandler).toBeCalledTimes(0);
   });
 
+  it('should know that the interval is running', async () => {
+    const mockHandler = jest.fn();
+
+    await runComponentSetup(
+      () => useInterval(mockHandler, 200, false),
+      async ({ startInterval, stopInterval, isIntervalRunning }) => {
+        startInterval();
+        await timeout(100);
+        expect(isIntervalRunning.value).toEqual(true);
+        stopInterval();
+        expect(isIntervalRunning.value).toEqual(false);
+      },
+    );
+  });
+
   it('should start a new interval before the old one was triggered and only complete once', async () => {
     const mockHandler = jest.fn();
 
     await runComponentSetup(
-      () => {
-        return useInterval(mockHandler, 100, false);
-      },
+      () => useInterval(mockHandler, 100, false),
       async ({ startInterval }) => {
         startInterval();
         await timeout(50);
