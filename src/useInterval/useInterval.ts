@@ -1,6 +1,5 @@
 import type { ComputedRef } from '@muban/muban';
-import { computed, onMounted, onUnmounted } from '@muban/muban';
-import { ref } from '@muban/muban/dist/esm';
+import { ref, computed, onMounted, onUnmounted } from '@muban/muban';
 
 /**
  *  A hook that can be used to call a function on a provided interval, by default the interval
