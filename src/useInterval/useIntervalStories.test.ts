@@ -27,16 +27,4 @@ describe('useInterval stories', () => {
 
     await waitFor(() => expect(getByText('interval called')).toBeInTheDocument());
   });
-
-  it('should stop the interval after starting', async () => {
-    const { getByText, getByRef } = render(Demo, { interval: 100 });
-    const startButton = getByRef('start-button');
-    const stopButton = getByRef('stop-button');
-
-    click(startButton);
-    await timeout(100);
-    click(stopButton);
-
-    await waitFor(() => expect(getByText('interval stopped')).toBeInTheDocument());
-  });
 });
