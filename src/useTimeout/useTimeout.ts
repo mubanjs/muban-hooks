@@ -13,15 +13,15 @@ export const useTimeout = (
   duration: number = 100,
   startImmediate: boolean = true,
 ): { startTimeout: () => void; cancelTimeout: () => void } => {
-  let handle = -1;
+  let timeoutId = -1;
 
   function start() {
     cancel();
-    handle = setTimeout(callback, duration) as unknown as number;
+    timeoutId = setTimeout(callback, duration) as unknown as number;
   }
 
   function cancel() {
-    clearTimeout(handle);
+    clearTimeout(timeoutId);
   }
 
   onUnmounted(() => {
