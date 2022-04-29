@@ -16,7 +16,7 @@ function useTimeout(
   callback: () => void,
   duration?: number = 100,
   startImmediate?: boolean = true,
-): { startTimeout: () => void, cancelTimeout: () => void }
+): { startTimeout: () => void, clearButton: () => void, isTimeoutRunning: ComputedRef<boolean> }
 ```
 
 ### Parameters
@@ -25,15 +25,15 @@ function useTimeout(
 * `startImmediate` - Whether or not you want to immediately start the timeout.
 
 ### Returns
-* `{ startTimeout, cancelTimeout, isTimeoutRunning }`
+* `{ startTimeout, clearTimeout, isTimeoutRunning }`
   * `startTimeout` – A function that starts the timeout, any running timeouts will automatically be cancelled.
-  * `cancelTimeout` – A function that will cancel the current active timeout.
+  * `clearTimeout` – A function that will cancel the current active timeout.
   * `isTimeoutRunning` – A computed ref that keeps track whether or not the timeout is running.
 
 ## Usage
 
 ```ts
-const { startTimeout, cancelTimeout, isTimeoutRunning } = useTimeout(() => {
+const { startTimeout, clearTimeout, isTimeoutRunning } = useTimeout(() => {
   console.log('The timeout has run out')
 }, 1000, false);
 ````
@@ -43,7 +43,7 @@ const Demo = defineComponent({
   name: 'demo',
   refs: {
     startBtn: 'start-button'
-    cancelButton: 'cancel-button'
+    clearButton: 'clear-button'
   },
   setup({ refs }) {
     // The timeout runs as soon as the component is mounted.
@@ -52,7 +52,7 @@ const Demo = defineComponent({
     }, 1000);
 
     // The timeout doesn't start automatically, but requires a user action to start.
-    const { startTimeout, cancelTimeout } = useTimeout(() => {
+    const { startTimeout, clearTimeout } = useTimeout(() => {
       console.log('The timeout has run out')
     }, 1000, false);
 
@@ -64,7 +64,7 @@ const Demo = defineComponent({
       }),
       bind(refs.cancelButton, {
         click() {
-          cancelTimeout(); // This cancels the timeout if it's active.
+          clearTimeout(); // This clears the timeout if it's active.
         }
       })
     ]

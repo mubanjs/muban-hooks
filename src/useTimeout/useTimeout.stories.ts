@@ -21,7 +21,7 @@ export const Demo: Story<DemoStoryProps> = () => ({
     refs: {
       label: 'label',
       startButton: 'start-button',
-      cancelButton: 'cancel-button',
+      clearButton: 'clear-button',
     },
     setup({ refs, props }) {
       const [logBinding, log] = useStorybookLog(refs.label);
@@ -30,7 +30,7 @@ export const Demo: Story<DemoStoryProps> = () => ({
         log('timeout complete');
       }
 
-      const { startTimeout, cancelTimeout, isTimeoutRunning } = useTimeout(
+      const { startTimeout, clearTimeout, isTimeoutRunning } = useTimeout(
         onTimeoutComplete,
         props.duration,
         props.startImmediate,
@@ -46,13 +46,13 @@ export const Demo: Story<DemoStoryProps> = () => ({
             startTimeout();
           },
         }),
-        bind(refs.cancelButton, {
+        bind(refs.clearButton, {
           attr: {
             disabled: computed(() => !isTimeoutRunning.value),
           },
           click() {
-            log('canceled timeout');
-            cancelTimeout();
+            log('cleared timeout');
+            clearTimeout();
           },
         }),
       ];
@@ -76,9 +76,7 @@ export const Demo: Story<DemoStoryProps> = () => ({
       <div class="card-body">
         <button type="button" data-ref="start-button" class="btn btn-primary">Start timeout</button>
         ${' '}
-        <button type="button" data-ref="cancel-button" class="btn btn-danger">
-          Cancel timeout
-        </button>
+        <button type="button" data-ref="clear-button" class="btn btn-danger">Clear timeout</button>
       </div>
     </div>
   </div>`,

@@ -53,11 +53,11 @@ describe('useTimeout', () => {
 
     runComponentSetup(
       () => useTimeout(mockHandler, 200, false),
-      ({ startTimeout, cancelTimeout, isTimeoutRunning }) => {
+      ({ startTimeout, clearTimeout, isTimeoutRunning }) => {
         startTimeout();
         jest.advanceTimersByTime(100);
         expect(isTimeoutRunning.value).toEqual(true);
-        cancelTimeout();
+        clearTimeout();
         expect(isTimeoutRunning.value).toEqual(false);
       },
     );
@@ -68,10 +68,10 @@ describe('useTimeout', () => {
 
     runComponentSetup(
       () => useTimeout(mockHandler, 500, false),
-      ({ startTimeout, cancelTimeout }) => {
+      ({ startTimeout, clearTimeout }) => {
         startTimeout();
         jest.advanceTimersByTime(100);
-        cancelTimeout();
+        clearTimeout();
       },
     );
 

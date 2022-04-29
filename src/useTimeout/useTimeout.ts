@@ -18,26 +18,26 @@ export const useTimeout = (
   startImmediate: boolean = true,
 ): {
   startTimeout: () => void;
-  cancelTimeout: () => void;
+  clearTimeout: () => void;
   isTimeoutRunning: ComputedRef<boolean>;
 } => {
   const timeoutId = ref(NOT_RUNNING);
 
   function start() {
-    cancel();
+    clear();
     timeoutId.value = setTimeout(() => {
       timeoutId.value = NOT_RUNNING;
       callback();
     }, duration) as unknown as number;
   }
 
-  function cancel() {
+  function clear() {
     clearTimeout(timeoutId.value);
     timeoutId.value = NOT_RUNNING;
   }
 
   onUnmounted(() => {
-    cancel();
+    clear();
   });
 
   onMounted(() => {
@@ -46,7 +46,7 @@ export const useTimeout = (
 
   return {
     startTimeout: start,
-    cancelTimeout: cancel,
+    clearTimeout: clear,
     isTimeoutRunning: computed(() => timeoutId.value !== NOT_RUNNING),
   };
 };
