@@ -1,9 +1,12 @@
 import '@testing-library/jest-dom';
 import { waitFor, render } from '@muban/testing-library';
+import userEvent from '@testing-library/user-event';
 import { Demo } from './useInterval.stories';
 import { timeout } from '../useTimeout/useTimeout.test.utils';
 
 describe('useInterval stories', () => {
+  const { click } = userEvent.setup();
+
   it('should render', () => {
     const { getByText } = render(Demo);
 
@@ -20,7 +23,7 @@ describe('useInterval stories', () => {
     const { getByText, getByRef } = render(Demo, { interval: 100 });
     const startButton = getByRef('start-button');
 
-    startButton.click();
+    click(startButton);
 
     await waitFor(() => expect(getByText('interval called')).toBeInTheDocument());
   });
@@ -30,9 +33,9 @@ describe('useInterval stories', () => {
     const startButton = getByRef('start-button');
     const stopButton = getByRef('stop-button');
 
-    startButton.click();
+    click(startButton);
     await timeout(100);
-    stopButton.click();
+    click(stopButton);
 
     await waitFor(() => expect(getByText('interval stopped')).toBeInTheDocument());
   });
