@@ -1,9 +1,12 @@
 import '@testing-library/jest-dom';
 import { waitFor, render } from '@muban/testing-library';
+import userEvent from '@testing-library/user-event';
 import { Demo } from './useTimeout.stories';
 import { timeout } from './useTimeout.test.utils';
 
 describe('useTimeout stories', () => {
+  const { click } = userEvent.setup();
+
   it('should render', () => {
     const { getByText } = render(Demo);
 
@@ -20,7 +23,7 @@ describe('useTimeout stories', () => {
     const { getByText, getByRef } = render(Demo, { duration: 1 });
     const startButton = getByRef('start-button');
 
-    startButton.click();
+    click(startButton);
 
     await waitFor(() => expect(getByText('timeout complete')).toBeInTheDocument());
   });
@@ -30,9 +33,9 @@ describe('useTimeout stories', () => {
     const startButton = getByRef('start-button');
     const cancelButton = getByRef('cancel-button');
 
-    startButton.click();
+    click(startButton);
     await timeout(1);
-    cancelButton.click();
+    click(cancelButton);
 
     await waitFor(() => expect(getByText('canceled timeout')).toBeInTheDocument());
   });
