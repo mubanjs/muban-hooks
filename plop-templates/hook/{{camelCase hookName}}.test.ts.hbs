@@ -1,0 +1,12 @@
+import { runComponentSetup } from '@muban/test-utils';
+import { {{camelCase hookName}} } from './{{camelCase hookName}}';
+
+jest.mock('@muban/muban', () => jest.requireActual('@muban/test-utils').getMubanLifecycleMock());
+
+describe('{{camelCase hookName}}', () => {
+  it('should not crash', async () => {
+    await runComponentSetup(() => {
+      {{camelCase hookName}}();
+    });
+  });
+});
