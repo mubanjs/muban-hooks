@@ -1,0 +1,60 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta
+  title="useResizeObserver/docs"
+/>
+
+# useResizeObserver
+
+Please add a description about the `useResizeObserver` hook.
+
+## Reference
+
+```ts
+function useResizeObserver(
+  source: DomElementOrRef,
+  callback: KeyDownCallback,
+  debounceTime?: number,
+): void
+```
+
+### Parameters
+
+* `source` - The DOM Element or Ref that you want to observe for resizes.
+* `callback` - The function to invoke when the source is resized.
+* `debounceTime` - The amount of debounce you want to apply to the callback function.
+
+### Returns
+
+* `void`
+
+## Usage
+
+```ts
+useResizeObserver(refs.someRef, () => {
+  console.log('someRef was resized!')
+}, 100);
+````
+
+```ts
+const Demo = defineComponent({
+  name: 'demo',
+  refs: {
+    someRef: 'some-ref',
+  },
+  setup({ refs }) {
+
+    // The most basic implementation of watching an element for resizes.
+    useResizeObserver(refs.someRef, () => {
+        console.log('someRef was resized')
+    });
+
+    // The callback method can easily be debounced to reduce the amount of triggers.
+    useResizeObserver(refs.someRef, () => {
+        console.log('someRef was resized.')
+    }, 500);
+
+    return [];
+  }
+})
+```
