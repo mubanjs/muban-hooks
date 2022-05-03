@@ -10,7 +10,7 @@ let resizeObserverInstance: ResizeObserver;
  * We create only one ResizeObserver instance, and we create it on demand. This way we keep the
  * amount of observers to a minimum.
  */
-function getResizeObserverInstance() {
+function getResizeObserverInstance(): ResizeObserver {
   if (!resizeObserverInstance) {
     resizeObserverInstance = new ResizeObserver((entries, observer) => {
       entries.forEach((entry) => {
