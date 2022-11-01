@@ -1,6 +1,6 @@
 {
   "name": "@muban/hooks",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.3",
   "description": "Reusable hooks for Muban components",
   "keywords": [
     "muban",
@@ -41,7 +41,7 @@
     "plop": "plop"
   },
   "peerDependencies": {
-    "@muban/muban": "^1.0.0-alpha.28"
+    "@muban/muban": "^1.0.0-alpha.34"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
