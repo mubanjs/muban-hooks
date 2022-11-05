@@ -5,5 +5,5 @@ module.exports = {
   // setupFilesAfterEnv: ['<rootDir>/test-utils/setupTests.js'],
   // added "(?<!types.)" as a negative lookbehind to the default pattern
   // to exclude .types.test.ts patterns fro being picked up by jest
-  testRegex: '(/__tests__/.*|(\\.|/)(?<!types.)(test|spec))\\.[jt]sx?$'
+  testRegex: '(/__tests__/.*|(\\.|/)(?<!types.)(test|spec))\\.[jt]sx?$',
 };
