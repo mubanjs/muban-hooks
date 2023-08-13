@@ -1,0 +1,73 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta
+  title="useTimeout/docs"
+/>
+
+# useTimeout
+
+The `useTimeout` hook is a wrapper around the native `setTimeout`, it allows you to easily create set
+a timeout within your component that will be auto cancelled when the component unmounts.
+
+## Reference
+
+```ts
+function useTimeout(
+  callback: () => void,
+  duration?: number = 100,
+  startImmediate?: boolean = true,
+): { startTimeout: () => void, clearButton: () => void, isTimeoutRunning: ComputedRef<boolean> }
+```
+
+### Parameters
+* `callback` – The function to invoke when the timeout runs out.
+* `duration` - The duration of the timeout you want to create.
+* `startImmediate` - Whether or not you want to immediately start the timeout.
+
+### Returns
+* `{ startTimeout, clearTimeout, isTimeoutRunning }`
+  * `startTimeout` – A function that starts the timeout, any running timeouts will automatically be cancelled.
+  * `clearTimeout` – A function that will cancel the current active timeout.
+  * `isTimeoutRunning` – A computed ref that keeps track whether or not the timeout is running.
+
+## Usage
+
+```ts
+const { startTimeout, clearTimeout, isTimeoutRunning } = useTimeout(() => {
+  console.log('The timeout has run out')
+}, 1000, false);
+````
+
+```ts
+const Demo = defineComponent({
+  name: 'demo',
+  refs: {
+    startBtn: 'start-button'
+    clearButton: 'clear-button'
+  },
+  setup({ refs }) {
+    // The timeout runs as soon as the component is mounted.
+    useTimeout(() => {
+      console.log('The timeout has run out')
+    }, 1000);
+
+    // The timeout doesn't start automatically, but requires a user action to start.
+    const { startTimeout, clearTimeout } = useTimeout(() => {
+      console.log('The timeout has run out')
+    }, 1000, false);
+
+    return [
+      bind(refs.startBtn, {
+        click() {
+         startTimeout(); // This actually starts the timeout.
+        }
+      }),
+      bind(refs.cancelButton, {
+        click() {
+          clearTimeout(); // This clears the timeout if it's active.
+        }
+      })
+    ]
+  }
+})
+```
